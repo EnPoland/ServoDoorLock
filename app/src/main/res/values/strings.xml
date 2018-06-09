@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Smart Door Lock</string>
+    <string name="lock_state_locked">Lock State: LOCKED</string>
+    <string name="connect_to_bluetooth_module">Connect to Bluetooth Module</string>
+    <string name="lock_unlock_door">Lock/Unlock Door</string>
+    <string name="establish">Please establish a connection first</string>
+    <string name="lock_state_unlock">Lock State: UNLOCKED</string>
+    <string name="doesnt_support">Device doesn\'t support bluetooth</string>
+    <string name="please_pair">Please pair the device first</string>
+    <string name="succes">Connection to bluetooth device successful</string>
+    <string name="Enter">Enter</string>
+    <string name="att">number of remaining login attempts</string>
+    <string name="empty">Enter password please</string>
+    <string name="enter_pass">Enter password please</string>
+    <string name="wrong_pass">Wrong password, try again</string>
+    <string name="oldPass">Enter old password</string>
+    <string name="firstPass">Enter new password</string>
+    <string name="secondPass">Confirm new password</string>
+    <string name="change_pass">Change</string>
+</resources>

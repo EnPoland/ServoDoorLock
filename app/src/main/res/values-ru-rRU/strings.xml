@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Smart Door Lock</string>
+    <string name="lock_state_locked">Состояние замка: Закрыт</string>
+    <string name="connect_to_bluetooth_module">Подключиться</string>
+    <string name="lock_unlock_door">Открыть/Закрыть</string>
+    <string name="establish">Пожалуйста, сначала установите соединение</string>
+    <string name="lock_state_unlock">Состояние замка: Открыт</string>
+    <string name="doesnt_support">Устройство не поддерживает блютуз</string>
+    <string name="please_pair">Сначала сопряжите устройства!</string>
+    <string name="succes">Соединение с блютуз устройством прошло успешно</string>
+    <string name="Enter">Отправить</string>
+    <string name="empty">Enter password please</string>
+    <string name="enter_pass">Enter password please</string>
+    <string name="wrong_pass">Wrong password, try again</string>
+    <string name="oldPass">Enter old password</string>
+    <string name="firstPass">Enter new password</string>
+    <string name="secondPass">Confirm new password</string>
+    <string name="change_pass">Change</string>
+</resources>
