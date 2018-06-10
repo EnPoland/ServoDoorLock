@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.DrawableContainer;
+import android.support.constraint.solver.ArrayLinkedVariables;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 import android.os.Handler;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final String DEVICE_ADDRESS = "98:D3:51:F5:AE:B3"; //MAC Address of Bluetooth Module
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-
+    public static ArrayList<SharedPreferences> passwords = new ArrayList<>();
     private BluetoothDevice device;
     private BluetoothSocket socket;
 
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     EditText pass;
     ImageButton lock_state_btn;
     ImageButton open_settings;
-    SharedPreferences sharedPreferences;
+   static SharedPreferences sharedPreferences;
     final static String passwordHash = "hash";
 
 
@@ -68,10 +70,20 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sharedPreferences = getSharedPreferences(passwordHash,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(passwordHash,"2a48a68eed639829a4e2dfe4f44a");
-        editor.apply();
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+
+        if (isFirstRun) {
+            sharedPreferences = getSharedPreferences(passwordHash,MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(passwordHash,"2a48a68eed639829a4e2dfe4f44a");
+            editor.apply();
+        }
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).apply();
+
+
+        //passwords.add(0,sharedPreferences);
 
         pass = (EditText) findViewById(R.id.editPass);
         lock_state_btn = (ImageButton) findViewById(R.id.lock_state_btn);
@@ -121,8 +133,8 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 try {
-                    PasswordCheck check = new PasswordCheck();
-                    if (check.checkPass(pass.getText().toString(),MainActivity.this)) {
+
+                    if (PasswordCheck.checkPass(pass.getText().toString(),MainActivity.this)) {
                         command = "1";
                         Toast.makeText(getApplicationContext(), "good", Toast.LENGTH_SHORT).show();
                         try {

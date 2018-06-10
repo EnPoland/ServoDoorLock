@@ -17,14 +17,14 @@ public class PasswordCheck {
 
 
     private static MessageDigest md;
-    SharedPreferences preferences;
+    static SharedPreferences preferences;
 
 
-    public boolean checkPass(String text, Context context) throws IOException {
+    public static boolean checkPass(String text, Context context) throws IOException {
 
        preferences = context.getSharedPreferences(MainActivity.passwordHash,0);
        String textcryp = preferences.getString(MainActivity.passwordHash,"");
-
+//        String textcryp = MainActivity.passwords.get(MainActivity.passwords.size()-1).getString(MainActivity.passwordHash,"");
 
         String textcry = cryptWithMD5(text);
         System.out.println(textcry);

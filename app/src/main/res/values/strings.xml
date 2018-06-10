@@ -36,4 +36,6 @@
     <string name="enter_new_pass">Please enter new password</string>
     <string name="sec_enter_new_pass">Please repeat password</string>
     <string name="enter_old_pass">Please enter your old password</string>
+    <string name="fill_in_fields">Please fill in all the fields</string>
+    <string name="pass_dont_match">Passwords do not match</string>
 </resources>
