@@ -1,37 +1,23 @@
-package com.example.philipgo.servodoorlock;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.DrawableContainer;
-import android.support.constraint.solver.ArrayLinkedVariables;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+package com.en.po.servodoorlock;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.view.MotionEvent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
-import android.os.Handler;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,17 +27,8 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<SharedPreferences> passwords = new ArrayList<>();
     private BluetoothDevice device;
     private BluetoothSocket socket;
-
-
-
     private OutputStream outputStream;
     private InputStream inputStream;
-
-
-    Thread thread;
-    byte buffer[];
-
-    boolean stopThread;
     boolean connected = false;
     String command;
 

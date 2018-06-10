@@ -1,13 +1,9 @@
-package com.example.philipgo.servodoorlock;
+package com.en.po.servodoorlock;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.io.BufferedReader;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
