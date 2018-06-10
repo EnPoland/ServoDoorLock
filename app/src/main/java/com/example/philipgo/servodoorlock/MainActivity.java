@@ -1,5 +1,9 @@
 package com.example.philipgo.servodoorlock;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.DrawableContainer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -52,27 +56,37 @@ public class MainActivity extends AppCompatActivity {
     ImageButton  bluetooth_connect_btn;
     EditText pass;
     ImageButton lock_state_btn;
+    ImageButton open_settings;
+    SharedPreferences sharedPreferences;
+    final static String passwordHash = "hash";
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferences = getSharedPreferences(passwordHash,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(passwordHash,"2a48a68eed639829a4e2dfe4f44a");
+        editor.apply();
 
         pass = (EditText) findViewById(R.id.editPass);
         lock_state_btn = (ImageButton) findViewById(R.id.lock_state_btn);
         bluetooth_connect_btn = (ImageButton) findViewById(R.id.bluetooth_connect_btn);
+        open_settings = (ImageButton) findViewById(R.id.settings_btn);
 
 
 
         bluetooth_connect_btn.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View v){
-            pass.setVisibility(View.VISIBLE);
+
                if(BTinit())
                {
-                   BTconnect();
+                   BTconnect(1);
 
 
                    // The code below sends the number 3 to the Arduino asking it to send the current state of the door lock so the lock state icon can be updated accordingly
@@ -116,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    }else Toast.makeText(getApplicationContext(), R.string.wrong_pass, Toast.LENGTH_SHORT).show();
+                    }else Toast.makeText(getApplicationContext(), R.string.wrong_pass, Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -124,6 +138,19 @@ public class MainActivity extends AppCompatActivity {
             }
            }
         });
+
+        open_settings.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                if (connected) BTconnect(0);
+
+                bluetooth_connect_btn.setImageResource(R.drawable.bluetooth_not);
+                Toast.makeText(getApplicationContext(), R.string.pass_change_request, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), PasswordActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     //Initializes bluetooth module
@@ -175,47 +202,51 @@ public class MainActivity extends AppCompatActivity {
         return found;
     }
 
-    public boolean BTconnect()
-    {
+    public boolean BTconnect(int code)  {
+        if (code == 1) {
+            try {
+                socket = device.createRfcommSocketToServiceRecord(PORT_UUID); //Creates a socket to handle the outgoing connection
+                socket.connect();
 
-        try
-        {
-            socket = device.createRfcommSocketToServiceRecord(PORT_UUID); //Creates a socket to handle the outgoing connection
-            socket.connect();
-
-            Toast.makeText(getApplicationContext(),
-                    R.string.succes, Toast.LENGTH_LONG).show();
-            connected = true;
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-            connected = false;
-        }
-
-        if(connected)
-        {
-            try
-            {
-                outputStream = socket.getOutputStream(); //gets the output stream of the socket
-            }
-            catch(IOException e)
-            {
+                Toast.makeText(getApplicationContext(),
+                        R.string.succes, Toast.LENGTH_LONG).show();
+                bluetooth_connect_btn.setImageResource(R.drawable.bluetooth_yes);
+                pass.setVisibility(View.VISIBLE);
+                connected = true;
+            } catch (IOException e) {
                 e.printStackTrace();
+                connected = false;
             }
 
-            try
-            {
-                inputStream = socket.getInputStream(); //gets the input stream of the socket
+            if (connected) {
+                try {
+                    outputStream = socket.getOutputStream(); //gets the output stream of the socket
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    inputStream = socket.getInputStream(); //gets the input stream of the socket
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            catch (IOException e)
-            {
+
+        }else {
+            try {
+                socket.close();
+                connected = false;
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         return connected;
+
     }
+
+
+
 
     @Override
     protected void onStart()

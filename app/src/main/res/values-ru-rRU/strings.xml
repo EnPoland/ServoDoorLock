@@ -16,4 +16,8 @@
     <string name="firstPass">Enter new password</string>
     <string name="secondPass">Confirm new password</string>
     <string name="change_pass">Change</string>
+    <string name="pass_change_request">\'Cause of request on password change connection with bluetooth module was interrupted</string>
+    <string name="enter_new_pass">Please enter new password</string>
+    <string name="sec_enter_new_pass">Please repeate your new password</string>
+    <string name="enter_old_pass">Please enter your old password</string>
 </resources>

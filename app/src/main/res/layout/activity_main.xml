@@ -34,7 +34,7 @@
         android:layout_alignParentTop="true"
         android:background="@null"
         android:scaleType="fitCenter"
-        android:src="@drawable/bluetooth"
+        android:src="@drawable/bluetooth_not"
         android:text="@string/connect_to_bluetooth_module"
         android:layout_alignParentLeft="true" />
 
@@ -53,6 +53,18 @@
         android:textSize="18sp"
         android:visibility="invisible" />
 
+    <ImageButton
+        android:id="@+id/settings_btn"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/editPass"
+        android:layout_toRightOf="@+id/editPass"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/filter"
+        android:text="@string/connect_to_bluetooth_module" />
 
 
 </RelativeLayout>

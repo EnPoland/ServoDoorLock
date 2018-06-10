@@ -1,11 +1,10 @@
 package com.example.philipgo.servodoorlock;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.io.BufferedReader;
-import java.io.File;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,25 +17,19 @@ public class PasswordCheck {
 
 
     private static MessageDigest md;
+    SharedPreferences preferences;
 
 
     public boolean checkPass(String text, Context context) throws IOException {
-        InputStream inputStream = context.getResources().getAssets().open("text.txt");
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        StringBuilder textcryp = new StringBuilder();
-        String oneLine;
-        while ((oneLine = bufferedReader.readLine())!=null){
-            textcryp.append(oneLine);
-        }
-        bufferedReader.close();
-        inputStream.close();
-        inputStreamReader.close();
+
+       preferences = context.getSharedPreferences(MainActivity.passwordHash,0);
+       String textcryp = preferences.getString(MainActivity.passwordHash,"");
+
 
         String textcry = cryptWithMD5(text);
         System.out.println(textcry);
         assert textcry != null;
-        if (textcry.equals(textcryp.toString()))return true;
+        if (textcry.equals(textcryp))return true;
         else return false;
 
     }
