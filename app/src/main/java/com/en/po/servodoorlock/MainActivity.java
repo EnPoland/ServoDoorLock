@@ -13,9 +13,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,11 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
     private final String DEVICE_ADDRESS = "98:D3:51:F5:AE:B3"; //MAC Address of Bluetooth Module
     private final UUID PORT_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-    public static ArrayList<SharedPreferences> passwords = new ArrayList<>();
     private BluetoothDevice device;
     private BluetoothSocket socket;
     private OutputStream outputStream;
-    private InputStream inputStream;
     boolean connected = false;
     String command;
 
@@ -36,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     EditText pass;
     ImageButton lock_state_btn;
     ImageButton open_settings;
-   static SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
     final static String passwordHash = "hash";
 
 
@@ -76,12 +72,7 @@ public class MainActivity extends AppCompatActivity {
                if(BTinit())
                {
                    BTconnect(1);
-
-
-                   // The code below sends the number 3 to the Arduino asking it to send the current state of the door lock so the lock state icon can be updated accordingly
-
                    command = "3";
-
                    try
                    {
                        outputStream.write(command.getBytes());
@@ -214,11 +205,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                try {
-                    inputStream = socket.getInputStream(); //gets the input stream of the socket
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
             }
 
         }else {
